@@ -12,12 +12,9 @@ using namespace std::literals;
 
 using asio::ip::tcp;
 
-client::client(asio::io_service& service, std::string user, std::string pass, std::string channel)
+client::client(asio::io_service& service, const std::string& user, const std::string& password, const std::string& channel)
   : io_service{&service}
   , socket{*io_service}
-  , username{user}
-  , password{pass}
-  , current_channel{channel}
 {
   tcp::resolver resolver(*io_service);
   tcp::resolver::query query("irc.chat.twitch.tv", "6667");
@@ -26,17 +23,17 @@ client::client(asio::io_service& service, std::string user, std::string pass, st
 
   if(con != tcp::resolver::iterator{}) {
     std::cout << "Connected to " << con->host_name() << ':' << con->service_name() << ".\n";
-    login();
+    login(channel, user, password);
   }
 }
 
 // give login info
-void client::login()
+void client::login(const std::string& user, const std::string& password, const std::string& channel)
 {
   asio::error_code error;
   asio::write(socket,
-              asio::buffer("PASS "s + password + "\r\nNICK " + username + "\r\nJOIN #"
-                           + current_channel
+              asio::buffer("PASS "s + password + "\r\nNICK " + user + "\r\nJOIN #"
+                           + channel
                            + "\r\nCAP REQ :twitch.tv/membership\r\nCAP REQ "
                              ":twitch.tv/commands\r\nCAP REQ "
                              ":twitch.tv/tags\r\n"),

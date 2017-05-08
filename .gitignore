@@ -1,2 +1,3 @@
- user_data.txt
+build/
+user_data.txt
 .ycm_extra_conf.py

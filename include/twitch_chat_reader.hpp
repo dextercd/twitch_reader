@@ -9,9 +9,9 @@
 
 class client {
 public:
-  client(asio::io_service& service, std::string user, std::string pass, std::string channel);
+  client(asio::io_service& service, const std::string& user, const std::string& password, const std::string& channel);
 
-  void login();
+  void login(const std::string& user, const std::string& password, const std::string& channel);
 
   void do_read();
 
@@ -25,10 +25,6 @@ public:
   asio::ip::tcp::socket socket;
 
   asio::streambuf receive_buffer;
-
-  std::string username;
-  std::string password;
-  std::string current_channel;
 };
 
 #endif
