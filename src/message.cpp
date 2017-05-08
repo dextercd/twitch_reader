@@ -1,5 +1,11 @@
 #include "message.hpp"
 
+const char* command_names[]{
+#define COMMAND_ITEM(x) #x,
+#define COMMAND_NUMBER_ITEM(x) #x,
+#include "command_type_list.hpp"
+};
+
 std::ostream& irc::operator<<(std::ostream& os, irc::command_type c)
 {
   std::size_t index = static_cast<std::size_t>(c);
@@ -21,7 +27,7 @@ irc::command_type irc::text_to_command(const char* text)
     return command_type::unknown;
   }
 
-  // Cast the index to the command_type enum
+  // Cast the index to command_type
   return static_cast<command_type>(n - std::begin(command_names));
 }
 

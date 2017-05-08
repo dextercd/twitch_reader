@@ -25,11 +25,16 @@ enum class command_type {
 #include "command_type_list.hpp"
 };
 
+
+extern const char* command_names[203];
+
+#if 0 // for C++17
 inline const char* command_names[]{
 #define COMMAND_ITEM(x) #x,
 #define COMMAND_NUMBER_ITEM(x) #x,
 #include "command_type_list.hpp"
 };
+#endif
 
 std::ostream& operator<<(std::ostream& os, command_type c);
 
