@@ -39,7 +39,8 @@ public:
     assign(s);
   }
 
-  constexpr color(const std::string& s) {
+
+  inline color(const std::string& s) {
     assign(s);
   }
 
@@ -51,7 +52,10 @@ public:
     : rgb{other.rgb[0], other.rgb[1], other.rgb[2]} {
   }
 
-  void assign(const std::string& s);
+  inline void
+  assign(const std::string& s) {
+    assign(s.c_str());
+  }
 
   constexpr void
   assign(const char* s) {
@@ -98,10 +102,42 @@ public:
   }
 };
 
-std::ostream& operator<<(std::ostream& os, const color c);
+inline std::ostream&
+operator<<(std::ostream& os, const color c) {
+  auto rf = os.flags();
 
-void set_foreground_color(std::ostream& os, color c);
-void set_background_color(std::ostream& os, color c);
-void reset_color(std::ostream& os);
+  os << '#';
+
+  os << std::hex;
+  os.fill('0');
+
+  os.width(2);
+  os << (unsigned int)c.rgb[0];
+
+  os.width(2);
+  os << (unsigned int)c.rgb[1];
+
+  os.width(2);
+  os << (unsigned int)c.rgb[2];
+
+  os.flags(rf);
+  return os;
+}
+
+inline void
+set_foreground_color(std::ostream& os, color c) {
+  os << "\x1b[38;2;" << (unsigned)c.rgb[0] << ';' << (unsigned)c.rgb[1] << ';' << (unsigned)c.rgb[2]
+     << 'm';
+}
+inline void
+set_background_color(std::ostream& os, color c) {
+  os << "\x1b[48;2;" << (unsigned)c.rgb[0] << ';' << (unsigned)c.rgb[1] << ';' << (unsigned)c.rgb[2]
+     << 'm';
+}
+
+inline void
+reset_color(std::ostream& os) {
+  os << "\x1b[0m";
+}
 
 #endif
