@@ -87,7 +87,8 @@ void client::handle_message(const irc::message& irc_message)
   switch(twm.get_type()) {
 
     case twitch::message_type::subscription: {
-      std::cout << twm.msubscription.display_name << " subscribed, for " << twm.msubscription.month_count << " months!";
+      std::cout << twm.msubscription.display_name << " subscribed, for " <<
+  twm.msubscription.month_count << " months!";
       if(!twm.msubscription.message.empty()) {
         std::cout << " Message: " << twm.msubscription.message;
       }
@@ -96,7 +97,8 @@ void client::handle_message(const irc::message& irc_message)
 
     case twitch::message_type::chat: {
       if(twm.mchat.bits >= 50) {
-        std::cout << "Thanks " << twm.mchat.display_name << " for the " << twm.mchat.bits << " bits." << " Message: " << twm.mchat.message << '\n';
+        std::cout << "Thanks " << twm.mchat.display_name << " for the " << twm.mchat.bits << "
+  bits." << " Message: " << twm.mchat.message << '\n';
       }
     } break;
 

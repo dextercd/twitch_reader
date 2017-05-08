@@ -143,7 +143,7 @@ struct subscription {
   }
 
   color name_color;
-  
+
   int month_count;
   std::string display_name;
   std::string user_name;
@@ -212,7 +212,6 @@ public:
 };
 
 message twitch_message(const irc::message& m);
-
 }
 
 #endif

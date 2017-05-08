@@ -1,7 +1,7 @@
 #include <chrono>
+#include <fstream>
 #include <iostream>
 #include <thread>
-#include <fstream>
 
 #include "twitch_chat_reader.hpp"
 
