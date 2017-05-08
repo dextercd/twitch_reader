@@ -13,7 +13,7 @@ namespace irc {
 
 class message_parser;
 
-struct prefix {
+struct prefix_t {
   std::string nick;
   std::string user;
   std::string host;
@@ -41,6 +41,9 @@ std::ostream& operator<<(std::ostream& os, command_type c);
 command_type text_to_command(const char* text);
 command_type text_to_command(const std::string& text);
 
+class message;
+std::ostream& operator<<(std::ostream&, const message&);
+
 class message {
   friend class message_parser;
   friend std::ostream& operator<<(std::ostream&, const message&);
@@ -50,7 +53,7 @@ public:
   std::unordered_map<std::string, std::string> tags;
 
   command_type command;
-  prefix prefix;
+  prefix_t prefix;
 
   bool has_prefix() const noexcept;
 

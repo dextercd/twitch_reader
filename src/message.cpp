@@ -1,6 +1,6 @@
 #include "message.hpp"
 
-const char* command_names[]{
+const char* irc::command_names[]{
 #define COMMAND_ITEM(x) #x,
 #define COMMAND_NUMBER_ITEM(x) #x,
 #include "command_type_list.hpp"
