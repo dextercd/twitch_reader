@@ -22,7 +22,7 @@ int main(int argc, char** argv)
   asio::io_service io_service;
   client c{io_service, name, oauth, argv[1]};
 
-  std::thread threads[2];
+  std::thread threads[1];
   for(auto& t : threads) {
     t = std::thread([&io_service]() { io_service.run(); });
   }
