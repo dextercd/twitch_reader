@@ -23,7 +23,7 @@ client::client(asio::io_service& service, const std::string& user, const std::st
 
   if(con != tcp::resolver::iterator{}) {
     std::cout << "Connected to " << con->host_name() << ':' << con->service_name() << ".\n";
-    login(channel, user, password);
+    login(user, password, channel);
   }
 }
 
