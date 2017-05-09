@@ -24,14 +24,20 @@ int main(int argc, char** argv)
 
   std::thread threads[1];
   for(auto& t : threads) {
-    t = std::thread([&io_service]() { io_service.run(); });
+    t = std::thread([&io_service]() {
+      try {
+        io_service.run();
+      } catch(const std::exception& e) {
+        std::cout << "exception: " << e.what() << '\n';
+      } catch(...) {
+        std::cout << "unknown exception.\n";
+      }
+    });
   }
 
   char ew;
   while(std::cin >> ew) { // allows the user to press C^D or C^Z to close the program
   }
-
-  c.close();
 
   for(auto& t : threads) {
     t.join();

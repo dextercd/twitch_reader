@@ -18,12 +18,15 @@ client::client(asio::io_service& service, const std::string& user, const std::st
 {
   tcp::resolver resolver(*io_service);
   tcp::resolver::query query("irc.chat.twitch.tv", "6667");
+  
+  asio::error_code connect_error;
+  auto con = asio::connect(socket, resolver.resolve(query), connect_error);
 
-  auto con = asio::connect(socket, resolver.resolve(query));
-
-  if(con != tcp::resolver::iterator{}) {
+  if(!connect_error && con != tcp::resolver::iterator{}) {
     std::cout << "Connected to " << con->host_name() << ':' << con->service_name() << ".\n";
     login(user, password, channel);
+  } else {
+    std::cout << "Couldn't connect :(";
   }
 }
 
