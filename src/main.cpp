@@ -35,10 +35,6 @@ int main(int argc, char** argv)
     });
   }
 
-  char ew;
-  while(std::cin >> ew) { // allows the user to press C^D or C^Z to close the program
-  }
-
   for(auto& t : threads) {
     t.join();
   }
