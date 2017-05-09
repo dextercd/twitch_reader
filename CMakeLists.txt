@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake_modules)
 project(chat_reader)
 
 set (CMAKE_CXX_STANDARD 17)

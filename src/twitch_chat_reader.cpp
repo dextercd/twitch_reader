@@ -26,7 +26,7 @@ client::client(asio::io_service& service, const std::string& user, const std::st
     std::cout << "Connected to " << con->host_name() << ':' << con->service_name() << ".\n";
     login(user, password, channel);
   } else {
-    std::cout << "Couldn't connect :(";
+    std::cout << "Couldn't connect :(\n";
   }
 }
 
@@ -72,7 +72,6 @@ void client::handle_message(const irc::message& irc_message)
 {
   std::cout << irc_message << "\n\n";
 
-  /*
   switch(irc_message.command) {
     case irc::command_type::PING: {
       ping_response(irc_message.parameters[0]);
@@ -83,6 +82,7 @@ void client::handle_message(const irc::message& irc_message)
     } break;
   }
 
+  /*
   auto twm{twitch::twitch_message(irc_message)};
   switch(twm.get_type()) {
 
