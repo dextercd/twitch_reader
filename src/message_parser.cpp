@@ -145,32 +145,36 @@ std::string irc::escape(std::string val)
   return ret;
 }
 
+
+// parses:   servername / ( nickname [ [ "!" user ] "@" host ] ) (theres a space bar after this part)
 void irc::message_parser::parse_prefix()
 {
   const char* prefix_element_start = it;
 
-  while(!std::strchr("! ", *it)) { // find end of <nick>
+// nickname
+  while(!std::strchr("!@ ", *it)) { // find end of <nickname>
     ++it;
   }
   current_message->prefix.nick.assign(prefix_element_start, it);
 
-  if(*it != '!') { // we don't have !<user>
-    goto end_prefix;
+// user
+  if(*it != '!') { // we don't have !<user>, so we should have @<host>
+    goto host;
   }
-
-  ++it;
-  prefix_element_start = it;
+  
+  prefix_element_start = ++it;
   while(!std::strchr("@ ", *it)) { // find end of <user>
     ++it;
   }
   current_message->prefix.user.assign(prefix_element_start, it);
 
-  if(*it != '@') { // we don't have @<host>
-    goto end_prefix;
+// host
+host:
+  if(*it != '@') {
+      goto end_prefix;
   }
 
-  ++it;
-  prefix_element_start = it;
+  prefix_element_start = ++it;
   while(*it != ' ') { // find end of <host>
     ++it;
   }
