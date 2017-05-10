@@ -2,6 +2,8 @@
 #define TWITCH_CHAT_READER
 
 #include <string>
+#include <vector>
+#include <mutex>
 
 #include <asio.hpp>
 
@@ -14,10 +16,16 @@ public:
   void login(const std::string& user, const std::string& password, const std::string& channel);
 
   void do_read();
+  void do_read_completer(const asio::error_code& error, std::size_t bytes_transferred);
+
+  void send_responses();
+  void send_responses_completer(const asio::error_code& error, std::size_t bytes_transferred);
 
   void handle_message(const irc::message& twm);
 
   void ping_response(const std::string& server);
+
+  bool can_send();
 
   void close();
 
@@ -25,6 +33,9 @@ public:
   asio::ip::tcp::socket socket;
 
   asio::streambuf receive_buffer;
+
+  std::mutex responses_mutex;
+  std::vector<std::string> responses;
 };
 
 #endif
