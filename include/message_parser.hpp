@@ -27,7 +27,7 @@ private:
 
   std::string get_key();
 
-  std::string get_escaped_value();
+  std::string get_value();
 
   void parse_prefix();
 
@@ -43,6 +43,8 @@ private:
 };
 
 message irc_message(const char* beg, const char* end);
+std::string unescape(std::string val);
+std::string escape(std::string val);
 
 } // irc::
 

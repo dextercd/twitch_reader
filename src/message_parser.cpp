@@ -56,7 +56,7 @@ void irc::message_parser::parse_tag()
   std::string key = get_key();
   assert(*it == '='); // after <key> there should be an '='
   ++it;
-  std::string value = get_escaped_value();
+  std::string value = get_value();
 
   current_message->tags.insert(std::make_pair(std::move(key), std::move(value)));
 }
@@ -77,32 +77,72 @@ std::string irc::message_parser::get_key()
   return std::string{start, it};
 }
 
-std::string irc::message_parser::get_escaped_value()
+std::string irc::message_parser::get_value()
 {
-  constexpr static std::pair<char, char> escaped_rep[]{{':', ';'},
-                                                       {'s', ' '},
-                                                       {'\\', '\\'},
-                                                       {'r', '\r'},
-                                                       {'n', '\n'}};
+
 
   std::string escaped_value;
+  
+  auto begin = it;
+  
+  // find end
+  for(; *it != ' ' && *it != ';'; ++it);
+  
+  // it is end
 
-  for(; *it != ' ' && *it != ';'; ++it) {
-    if(*it == '\\') { // escaped value
+  return unescape(std::string{begin, it});
+}
+
+constexpr static std::pair<char, char> escaped_rep[]{{':', ';'},
+                                                    {'s', ' '},
+                                                    {'\\', '\\'},
+                                                    {'r', '\r'},
+                                                    {'n', '\n'}};
+
+std::string irc::unescape(std::string val)
+{
+  std::string ret;
+  
+  for(auto it{val.begin()}; it != val.end(); ++it) {
+    if(*it == '\\') {
       ++it;
-      for(auto& esc : escaped_rep) {
-        if(*it == esc.first) {
-          escaped_value += esc.second;
+      for(const auto& rep : escaped_rep) {
+        if(*it == rep.first) {
+          ret += rep.second;
           break;
         }
-        // if we can't find a escaped value, just ignore it
       }
     } else {
-      escaped_value += *it;
+      ret += *it;
     }
   }
+  
+  return ret;
+}
 
-  return escaped_value;
+std::string irc::escape(std::string val)
+{
+  std::string ret;
+  
+  for(auto it{val.begin()}; it != val.end(); ++it) {
+    // check if *it should be escaped
+    for(const auto& rep : escaped_rep) {
+      // escape
+      if(*it == rep.second) {
+          ret += rep.first;
+      }
+      
+      goto next;
+    }
+    
+    // no escape
+    ret += *it;
+    
+    next:
+      ;
+  }
+  
+  return ret;
 }
 
 void irc::message_parser::parse_prefix()
