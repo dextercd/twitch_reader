@@ -4,14 +4,33 @@ project(chat_reader)
 
 set (CMAKE_CXX_STANDARD 17)
 
-add_executable(program src/main.cpp src/message.cpp src/message_parser.cpp src/twitch_chat_reader.cpp src/twitch_message.cpp)
+set(sources
+  "src/main.cpp"
+  "src/message.cpp"
+  "src/message_parser.cpp"
+  "src/twitch_chat_reader.cpp"
+  "src/twitch_message.cpp"
+)
 
-target_compile_definitions(program PRIVATE ASIO_STANDALONE)
+set(headers
+  "include/binary_find.hpp"
+  "include/color.hpp"
+  "include/command_type_list.hpp"
+  "include/convert.hpp"
+  "include/message.hpp"
+  "include/message_parser.hpp"
+  "include/twitch_chat_reader.hpp"
+  "include/twitch_message.hpp"
+)
 
-target_include_directories(program PRIVATE include)
+add_executable(chat_reader ${sources} ${headers})
+
+target_compile_definitions(chat_reader PRIVATE ASIO_STANDALONE)
+
+target_include_directories(chat_reader PRIVATE include)
 
 find_package(Threads)
-target_link_libraries(program ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(chat_reader ${CMAKE_THREAD_LIBS_INIT})
 
 find_package(Asio)
-target_include_directories(program PRIVATE ${ASIO_INCLUDE_DIR})
+target_include_directories(chat_reader PRIVATE ${ASIO_INCLUDE_DIR})
