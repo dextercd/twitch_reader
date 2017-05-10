@@ -1,9 +1,9 @@
 #ifndef TWITCH_CHAT_READER
 #define TWITCH_CHAT_READER
 
+#include <mutex>
 #include <string>
 #include <vector>
-#include <mutex>
 
 #include <asio.hpp>
 
@@ -11,7 +11,10 @@
 
 class client {
 public:
-  client(asio::io_service& service, const std::string& user, const std::string& password, const std::string& channel);
+  client(asio::io_service& service,
+         const std::string& user,
+         const std::string& password,
+         const std::string& channel);
 
   void login(const std::string& user, const std::string& password, const std::string& channel);
 

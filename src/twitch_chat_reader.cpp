@@ -136,7 +136,8 @@ void client::close()
 }
 
 // TODO: track how many messages you've send to not get a timeout
-bool client::can_send() {
+bool client::can_send()
+{
   std::lock_guard<std::mutex> lock{responses_mutex};
   return !responses.empty();
 }

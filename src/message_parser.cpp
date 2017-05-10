@@ -82,27 +82,28 @@ std::string irc::message_parser::get_value()
 
 
   std::string escaped_value;
-  
+
   auto begin = it;
-  
+
   // find end
-  for(; *it != ' ' && *it != ';'; ++it);
-  
+  for(; *it != ' ' && *it != ';'; ++it)
+    ;
+
   // it is end
 
   return unescape(std::string{begin, it});
 }
 
 constexpr static std::pair<char, char> escaped_rep[]{{':', ';'},
-                                                    {'s', ' '},
-                                                    {'\\', '\\'},
-                                                    {'r', '\r'},
-                                                    {'n', '\n'}};
+                                                     {'s', ' '},
+                                                     {'\\', '\\'},
+                                                     {'r', '\r'},
+                                                     {'n', '\n'}};
 
 std::string irc::unescape(std::string val)
 {
   std::string ret;
-  
+
   for(auto it{val.begin()}; it != val.end(); ++it) {
     if(*it == '\\') {
       ++it;
@@ -116,52 +117,52 @@ std::string irc::unescape(std::string val)
       ret += *it;
     }
   }
-  
+
   return ret;
 }
 
 std::string irc::escape(std::string val)
 {
   std::string ret;
-  
+
   for(auto it{val.begin()}; it != val.end(); ++it) {
     // check if *it should be escaped
     for(const auto& rep : escaped_rep) {
       // escape
       if(*it == rep.second) {
-          ret += rep.first;
+        ret += rep.first;
       }
-      
+
       goto next;
     }
-    
+
     // no escape
     ret += *it;
-    
-    next:
-      ;
+
+  next:;
   }
-  
+
   return ret;
 }
 
 
-// parses:   servername / ( nickname [ [ "!" user ] "@" host ] ) (theres a space bar after this part)
+// parses:   servername / ( nickname [ [ "!" user ] "@" host ] ) (theres a space bar after this
+// part)
 void irc::message_parser::parse_prefix()
 {
   const char* prefix_element_start = it;
 
-// nickname
+  // nickname
   while(!std::strchr("!@ ", *it)) { // find end of <nickname>
     ++it;
   }
   current_message->prefix.nick.assign(prefix_element_start, it);
 
-// user
+  // user
   if(*it != '!') { // we don't have !<user>, so we should have @<host>
     goto host;
   }
-  
+
   prefix_element_start = ++it;
   while(!std::strchr("@ ", *it)) { // find end of <user>
     ++it;
@@ -171,7 +172,7 @@ void irc::message_parser::parse_prefix()
 // host
 host:
   if(*it != '@') {
-      goto end_prefix;
+    goto end_prefix;
   }
 
   prefix_element_start = ++it;
