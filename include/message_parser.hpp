@@ -43,8 +43,8 @@ private:
 };
 
 message irc_message(const char* beg, const char* end);
-std::string unescape(std::string val);
-std::string escape(std::string val);
+std::string unescape(const std::string& val);
+std::string escape(const std::string& val);
 
 } // irc::
 

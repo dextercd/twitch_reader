@@ -100,7 +100,7 @@ constexpr static std::pair<char, char> escaped_rep[]{{':', ';'},
                                                      {'r', '\r'},
                                                      {'n', '\n'}};
 
-std::string irc::unescape(std::string val)
+std::string irc::unescape(const std::string& val)
 {
   std::string ret;
 
@@ -121,7 +121,7 @@ std::string irc::unescape(std::string val)
   return ret;
 }
 
-std::string irc::escape(std::string val)
+std::string irc::escape(const std::string& val)
 {
   std::string ret;
 
