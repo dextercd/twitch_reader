@@ -69,6 +69,7 @@ std::string irc::message_parser::get_key()
   }
 
   if(*it == '/') { // previous part is vendor
+    ++it;
     while(is_alpha_numeric(*it) || *it == '-') {
       ++it;
     }
