@@ -212,10 +212,7 @@ void irc::message_parser::parse_parameters()
     if(*it == ':') {
       parameter_begin = ++it;
 
-      while(true) {
-        if(*it == '\r') {
-          break;
-        }
+      while(*it != '\r') {
         ++it;
       }
 
