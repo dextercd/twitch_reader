@@ -5,7 +5,7 @@
 #include <memory>
 #include <utility>
 
-#include "message_parser.hpp"
+#include "irc/message_parser.hpp"
 
 using namespace std::placeholders;
 using namespace std::literals;

@@ -7,7 +7,7 @@
 using namespace std::literals;
 
 #include "color.hpp"
-#include "message.hpp"
+#include "irc/message.hpp"
 
 namespace twitch {
 

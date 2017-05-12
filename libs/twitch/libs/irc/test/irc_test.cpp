@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include <message.hpp>
-#include <message_parser.hpp>
+#include <irc/message.hpp>
+#include <irc/message_parser.hpp>
 
 #define BOOST_TEST_MAIN
 #include <boost/test/included/unit_test.hpp>

@@ -7,7 +7,7 @@
 
 #include <asio.hpp>
 
-#include "twitch_message.hpp"
+#include "twitch/twitch_message.hpp"
 
 class client {
 public:
