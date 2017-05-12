@@ -23,7 +23,6 @@ target_compile_definitions(chat_reader PRIVATE ASIO_STANDALONE)
 
 target_include_directories(chat_reader PRIVATE
   "include"
-  "include/basic"
 )
 
 find_package(Threads)
