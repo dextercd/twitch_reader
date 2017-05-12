@@ -8,3 +8,6 @@ It uses C++17 \<iterator>'s std::size() for array size, but other than that a C+
 I know it runs on both Linux and Windows, I see no reason why it wouldn't run on other OS's.
 
 To run you need to have a file named user_data.txt which has the reader's username on the first line and the oauth token on the next line, then start if via a command prompt like this: `program bobross` the program will join bob's channel with the info in user_data.txt 
+
+
+*NOTE* I'm learning cmake & irc as I go, if you see something I'm doing in a incorrectly/badly, please tell me.
